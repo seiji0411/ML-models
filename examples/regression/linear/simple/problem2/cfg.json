@@ -1,0 +1,71 @@
+{
+  "schema": {
+    "target": "T_degC",
+    "features": [
+      "Salnty"
+    ]
+  },
+  "ops": [
+    {
+      "type": "plot",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem2/scratch/data/bottle_aa.csv",
+          "charts": [
+            "scatter",
+            "histogram"
+          ]
+        },
+        "output": {
+          "plot": "problem2/scratch/plot"
+        }
+      }
+    },
+    {
+      "type": "split",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem2/scratch/data/bottle_aa.csv"
+        },
+        "output": {
+          "training": "problem2/scratch/data/training.csv",
+          "test": "problem2/scratch/data/test.csv"
+        }
+      }
+    },
+    {
+      "type": "fit",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem2/scratch/data/training.csv",
+          "opts": {
+            "loss": "mse",
+            "epochs": 10000,
+            "batch": 0.01,
+            "lr": 0.001
+          }
+        },
+        "output": {
+          "report": "problem2/scratch/report/train.json",
+          "model": "problem2/scratch/model.json"
+        }
+      }
+    },
+    {
+      "type": "test",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem2/scratch/data/test.csv",
+          "model": "problem2/scratch/model.json"
+        },
+        "output": {
+          "report": "problem2/scratch/report/test.json"
+        }
+      }
+    }
+  ]
+}

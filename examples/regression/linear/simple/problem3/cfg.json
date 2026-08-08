@@ -1,0 +1,72 @@
+{
+  "schema": {
+    "target": "Vent",
+    "features": [
+      "O2",
+      "CO2"
+    ]
+  },
+  "ops": [
+    {
+      "type": "plot",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem3/scratch/data/babybirds.csv",
+          "charts": [
+            "scatter",
+            "histogram"
+          ]
+        },
+        "output": {
+          "plot": "problem3/scratch/plot"
+        }
+      }
+    },
+    {
+      "type": "split",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem3/scratch/data/babybirds.csv"
+        },
+        "output": {
+          "training": "problem3/scratch/data/training.csv",
+          "test": "problem3/scratch/data/test.csv"
+        }
+      }
+    },
+    {
+      "type": "fit",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem3/scratch/data/training.csv",
+          "opts": {
+            "loss": "rss",
+            "epochs": 1000,
+            "batch": 0.01,
+            "lr": 0.001
+          }
+        },
+        "output": {
+          "report": "problem3/scratch/report/train.json",
+          "model": "problem3/scratch/model.json"
+        }
+      }
+    },
+    {
+      "type": "test",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem3/scratch/data/test.csv",
+          "model": "problem3/scratch/model.json"
+        },
+        "output": {
+          "report": "problem3/scratch/report/test.json"
+        }
+      }
+    }
+  ]
+}

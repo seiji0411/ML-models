@@ -1,0 +1,76 @@
+{
+  "schema": {
+    "target": "sales",
+    "features": [
+      "tv",
+      "radio",
+      "newspaper"
+    ]
+  },
+  "ops": [
+    {
+      "type": "plot",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem1/scratch/data/sale.csv",
+          "charts": [
+            "scatter",
+            "histogram"
+          ]
+        },
+        "output": {
+          "plot": "problem1/scratch/plot"
+        }
+      }
+    },
+    {
+      "type": "split",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem1/scratch/data/sale.csv",
+          "shuffle": true,
+          "ratio": 0.8
+        },
+        "output": {
+          "training": "problem1/scratch/data/training.csv",
+          "test": "problem1/scratch/data/test.csv"
+        }
+      }
+    },
+    {
+      "type": "fit",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem1/scratch/data/training.csv",
+          "opts": {
+            "loss": "mse",
+            "epochs": 100000,
+            "batch": 0.01,
+            "lr": 0.01,
+            "cp": 100000
+          }
+        },
+        "output": {
+          "report": "problem1/scratch/report/train.json",
+          "model": "problem1/scratch/model.json"
+        }
+      }
+    },
+    {
+      "type": "test",
+      "enabled": true,
+      "args": {
+        "input": {
+          "data": "problem1/scratch/data/test.csv",
+          "model": "problem1/scratch/model.json"
+        },
+        "output": {
+          "report": "problem1/scratch/report/test.json"
+        }
+      }
+    }
+  ]
+}
