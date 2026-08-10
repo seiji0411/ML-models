@@ -13,8 +13,8 @@ import (
 type Regresser struct {
 	opts      base.Opts
 	header    data.Header
-	intercept float64
-	coeffs    []float64
+	bias 		float64
+	weights    []float64
 	fitted    bool
 }
 
@@ -30,11 +30,11 @@ func (r *Regresser) SetHeader(h data.Header) {
 
 // Load loads pretrained model
 func (r *Regresser) Load(m Model) {
-	r.intercept = m.Intercept
+	r.bias = m.Intercept
 	if len(m.Coeffs) > 0 {
-		r.coeffs = make([]float64, len(r.header.Vars))
+		r.weights = make([]float64, len(r.header.Vars))
 		for i, f := range r.header.Vars {
-			r.coeffs[i] = m.Coeffs[f]
+			r.weights[i] = m.Coeffs[f]
 		}
 	}
 }
@@ -43,10 +43,10 @@ func (r *Regresser) Load(m Model) {
 func (r *Regresser) Get() Model {
 	coeffs := make(map[string]float64)
 	for i, f := range r.header.Vars {
-		coeffs[f] = r.coeffs[i]
+		coeffs[f] = r.weights[i]
 	}
 	return Model{
-		Intercept: r.intercept,
+		Intercept: r.bias,
 		Coeffs:    coeffs,
 	}
 }
@@ -65,8 +65,8 @@ func (r *Regresser) fit(pts []data.Point, h func(w, x *mat.VecDense) float64) er
 	coeffs, err := base.GD(&r.opts, pts, h, func(coeffs []float64) {
 		epochs++
 		if (r.opts.Cp > 0 && epochs%r.opts.Cp == 0) || epochs == r.opts.Epochs {
-			r.intercept = coeffs[0]
-			r.coeffs = coeffs[1:]
+			r.bias = coeffs[0]
+			r.weights = coeffs[1:]
 			r.Checkpoint(epochs, r.Measure(pts))
 		}
 	})
@@ -74,8 +74,8 @@ func (r *Regresser) fit(pts []data.Point, h func(w, x *mat.VecDense) float64) er
 	if err != nil {
 		return err
 	}
-	r.intercept = coeffs[0]
-	r.coeffs = coeffs[1:]
+	r.bias = coeffs[0]
+	r.weights = coeffs[1:]
 
 	return nil
 }
@@ -95,9 +95,9 @@ func (r *Regresser) Predict(vars []float64) float64 {
 	if !r.fitted {
 		return 0
 	}
-	p := r.intercept
-	for j := 0; j < len(r.coeffs); j++ {
-		p += r.coeffs[j] * vars[j]
+	p := r.bias
+	for j := 0; j < len(r.weights); j++ {
+		p += r.weights[j] * vars[j]
 	}
 	return p
 }

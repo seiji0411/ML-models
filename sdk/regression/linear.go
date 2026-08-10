@@ -9,7 +9,17 @@ import (
 )
 
 // Linear provides API to build linear regression model.
-// https://en.wikipedia.org/wiki/Linear_regression
+// Linear regression is a statistical technique used to find the relationship between variables.
+// In an ML context, linear regression finds the relationship between features and a label.
+// https://developers.google.com/machine-learning/crash-course/linear-regression
+//
+// The model is defined by the following equation:
+// y = mx + b
+// where:
+// y is the label
+// m is the slope
+// x is the feature
+// b is the intercept
 type Linear struct {
 	Regresser
 }
