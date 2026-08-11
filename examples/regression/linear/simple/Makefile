@@ -4,7 +4,7 @@ clean:
 	@rm -rf $(prb)/scratch
 
 copy:
-	@mkdir -p $(prb)/scratch/data/ && cp -R ../../data/$(prb)/ $(prb)/scratch/data/
+	@mkdir -p $(prb)/scratch/data/ && cp -R ../../data/$(prb)/*.* $(prb)/scratch/data/
 
 build:
 	@go build -o linear .
