@@ -7,10 +7,13 @@ type OpType string
 
 const (
 	// OpTypePlot ...
+	// Draws histograms and scatter plots for each feature against target and output png files in the specified directory
 	OpTypePlot OpType = "plot"
 	// OpTypeSplit ...
+	// Splits the dataset into training and test sets and output csv files in the specified directory
 	OpTypeSplit OpType = "split"
 	// OpTypeFit ...
+	// Trains the linear regression model and output model file in the specified directory
 	OpTypeFit OpType = "fit"
 	// OpTypeTest ...
 	OpTypeTest OpType = "test"

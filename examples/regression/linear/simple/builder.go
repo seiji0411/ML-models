@@ -71,7 +71,8 @@ func (p Planner) Run(cfg *viper.Viper) error {
 	return nil
 }
 
-// Plot draws scatter plots for each feature against target
+// Plot draws histogram and scatter plots for each feature against target
+// Outputs are saved in the directory specified in args.Output.Plot
 func (p Planner) Plot(schema data.Schema, args PlotOpArgs) {
 	fmt.Println("Plotting ...")
 	defer fmt.Println("Plotted !")
@@ -243,10 +244,12 @@ func (p Planner) Fit(schema data.Schema, args FitOpArgs) {
 		Observed: schema.Target,
 		Vars:     schema.Features,
 	})
+
 	// Train the regression
 	if err := rr.Fit(pts); err != nil {
 		log.Fatal(err)
 	}
+	
 	// Measure regression performance
 	rpt := rr.Measure(pts)
 
