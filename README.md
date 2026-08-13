@@ -3,7 +3,3 @@
 ## Examples
 
 ### Linear
-
-
-
-### Custom
