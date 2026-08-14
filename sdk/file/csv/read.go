@@ -8,7 +8,7 @@ import (
 	"github.com/seiji0411/ml-models/sdk/data"
 )
 
-// Read ...
+// CSV Read ...
 func Read(schema data.Schema, fpath string) []data.Point {
 	f, err := os.Open(fpath)
 	if err != nil {

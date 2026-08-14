@@ -8,7 +8,7 @@ import (
 	"github.com/go-gota/gota/dataframe"
 )
 
-// Save ...
+// CSV Save ...
 func Save(fpath string, df dataframe.DataFrame) error {
 	// Make sure dir exists
 	fdir, _ := path.Split(fpath)

@@ -40,7 +40,7 @@ func NewPoint(obs float64, vars []float64) Point {
 	}
 }
 
-// Parse ...
+// CSV Parse with schema ...
 func Parse(s Schema, h map[string]int, rs [][]string) []Point {
 	var points []Point
 
